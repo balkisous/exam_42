@@ -6,11 +6,12 @@
 /*   By: bben-yaa <bben-yaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 14:59:35 by bben-yaa          #+#    #+#             */
-/*   Updated: 2021/09/14 15:14:57 by bben-yaa         ###   ########.fr       */
+/*   Updated: 2021/09/14 16:09:12 by bben-yaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 
 void    ft_union(char   *s1, char   *s2)
 {
@@ -45,7 +46,36 @@ void    ft_union(char   *s1, char   *s2)
                 k++;
             }
             k = 0;
-        }
-    
-    }
+			if (interrup == 0)
+				exept[l++] = str[j]; 
+			j++;
+			interrup = 0;
+		}
+		i++;
+	}
+	while(exept[k])
+	{
+		if (exept[k] == str[i - 1])
+			interrup = 42;
+		k++;
+	}
+	if (interrup == 0)
+		exept[l++] = str[(i - 1)];
+	exept[l] = '\0';
+	l = 0;
+	while (exept[l])
+	{
+		write(1, &exept[l], 1);
+		l++;
+	}
+	write (1, "\n", 1);
+}
+
+int main (int argc, char **argv)
+{
+	if (argc != 3)
+		write(1, "\n", 1);
+	else
+		ft_union(argv[1], argv[2]);
+	return (0);
 }
