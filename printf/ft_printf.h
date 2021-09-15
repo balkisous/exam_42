@@ -6,7 +6,7 @@
 /*   By: bben-yaa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 08:54:04 by bben-yaa          #+#    #+#             */
-/*   Updated: 2021/09/15 10:06:15 by bben-yaa         ###   ########.fr       */
+/*   Updated: 2021/09/15 13:58:54 by bben-yaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ typedef struct	s_type
 }			t_type;
 
 void	ft_init(struct s_type p);
-//void	ft_print_hexa();
+void	ft_print_hexa(unsigned int n, struct s_type *p);
 void	ft_putnbr(int n);
 void	ft_print_d(int d, struct s_type *p);
 void	ft_print_s(char *s, struct s_type *p);
+void	ft_putnbr_hexa(unsigned int n);
+int		ft_hexa_leng(unsigned int n);
 int		ft_stock(char c, va_list nb_arg);
 int		ft_printf(const char *str, ...);
 int		ft_leng_d(int n);
