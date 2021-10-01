@@ -5,30 +5,51 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bben-yaa <bben-yaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 10:48:49 by bben-yaa          #+#    #+#             */
-/*   Updated: 2021/10/01 10:49:31 by bben-yaa         ###   ########.fr       */
+/*   Created: 2021/10/01 10:43:21 by bben-yaa          #+#    #+#             */
+/*   Updated: 2021/10/01 10:45:55 by bben-yaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-int	inter(char *str1, char *str2)
+int	find_me(char c, char *s)
 {
-	int	n = 0;
-	int j = 0;
-	char	printed[256];
-	while (str1[n])
+	int i = 0;
+	while (s[i])
 	{
-		if (find_me(str1[n], str2) && !(find_me(str1[n], printed)))
+		if (s[i] == c)
+			return (c);
+	}
+	return (0);
+}
+
+void	inter(char *s1, char *s2)
+{
+	int i;
+	int j;
+	int k;
+	char s3[256];
+	
+	i = 0;
+	k = 0;
+	j = 0;
+	while (s1[i])
+	{
+		while (s2[j])
 		{
-			ft_putchar(str1[n]);
-			printed[j] = str1[n];
+			if (s1[i] == s2[j])
+			{
+				if (!find_me(s1[i], s3))
+				{
+					write(1, &s1[i], 1);
+					s3[k++] = s1[i];
+				}
+			}
 			j++;
 		}
-		n++;
+		j = 0;
+		i++;
 	}
-	ft_putchar('\n');
-	return (0);
 }
 
 int	main(int ac, char **av)
@@ -36,7 +57,7 @@ int	main(int ac, char **av)
 	if (ac == 3)
 	{
 		inter(av[1], av[2]);
-		return (0);
 	}
-	return ('\n');
+	write(1, "\n", 1);
+	return(0);
 }
