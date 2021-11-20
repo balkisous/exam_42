@@ -157,6 +157,7 @@ int		ft_printf(const char	*str, ...)
 		}
 		i++;
 	}
+	va_end(nb_arg);
 	return (ret);
 }
 
