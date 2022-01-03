@@ -50,7 +50,7 @@ int		clear_all(FILE *file, char *draw, char *str)
 
 int		check_zone(t_zone *zone)
 {
-	return (zone->width > 0 && zone->height > 0 && zone->width < 300 && zone->height < 300);
+	return (zone->width > 0 || zone->height > 0 || zone->width < 300 || zone->height < 300);
 }
 
 int		check_shape(t_shape *shape)
@@ -72,17 +72,25 @@ int		in_circle(float x, float y, t_shape *shape)
 	return (0);
 }
 
-int		get_zone(FILE *file, t_zone *zone)
+char		*get_zone(FILE *file, t_zone *zone)
 {
 	int		scan_ret;
+	char	*draw;
+	int		i;
 
 	if ((scan_ret = fscanf(file, "%d %d %c\n", &zone->width, &zone->height, &zone->backg))!= 3)
 		return (0);
-	if (!check_zone(zone))
+	if (zone->width <= 0 || zone->width > 300 || zone->height > 300 || zone->height <= 0)
 		return (0);
-	if (scan_ret == -1)
+	if (!(draw = (char *)malloc(sizeof(draw) * (zone->width * zone->height))))
 		return (0);
-	return (1);
+	i = 0;
+	while (i < (zone->width * zone->height))
+	{
+		draw[i] = zone->backg;
+		i++;
+	}
+	return (draw);
 }
 
 char	*paint_backg(t_zone *zone)
@@ -129,7 +137,7 @@ int		draw_shapes(FILE *file, char *draw, t_zone *zone)
 
 	while ((ret_scan = fscanf(file, "%c %f %f %f %c\n", &tmp.type, &tmp.x, &tmp.y, &tmp.radius, &tmp.color)) == 5)
 	{
-		if (!check_shape(&tmp))
+		if (tmp.radius <= 0 || (tmp.type != 'c' && tmp.type != 'C'))
 			return (0);
 		draw_shape(zone, &tmp, draw);
 	}
@@ -164,10 +172,10 @@ int		main(int argc, char **argv)
 		return (str_error("Error: argument\n", 1));
 	if (!(file = fopen(argv[1], "r")))
 		return (str_error("Error: Operation file corrupted\n", 1));
-	if (!get_zone(file, &zone))
+	if (!(draw = get_zone(file, &zone)))
 		return (clear_all(file, NULL, "Error: Operation file corrupted\n"));
-	if (!(draw = paint_backg(&zone)))
-		return (clear_all(file, NULL, "Error: Operation file corrupted\n"));
+//	if (!(draw = paint_backg(&zone)))
+//		return (clear_all(file, NULL, "Error: Operation file corrupted\n"));
 	if (!draw_shapes(file, draw, &zone))
 		return (clear_all(file, draw, "Error: Operation file corrupted\n"));
 	draw_drawing(draw, &zone);
