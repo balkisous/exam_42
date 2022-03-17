@@ -180,7 +180,8 @@ int	main(int argc, char **argv, char **env)
 			if (strcmp(argv[i], "cd") == 0)
 				res = ft_cd(&cmd);
 			else
-				printf("exec\n");
+				ft_exec(&cmd);
+				//printf("exec\n");
 		}
 		i += avance + 1;
 	}
