@@ -6,31 +6,41 @@
 /*   By: bben-yaa <bben-yaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 11:11:01 by bben-yaa          #+#    #+#             */
-/*   Updated: 2022/06/13 14:11:29 by bben-yaa         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:17:52 by bben-yaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Warlock.hpp"
+#include "ASpell.hpp"
+#include "Fireball.hpp"
 #include "ATarget.hpp"
 #include "Fwoosh.hpp"
 #include "Dummy.hpp"
+#include "Polymorph.hpp"
+#include "SpellBook.hpp"
+#include "BrickWall.hpp"
+#include "TargetGenerator.hpp"
 
 int main()
 {
-	Warlock richard("Richard", "the Titled");
+	Warlock richard("Richard", "foo");
+	richard.setTitle("Hello, I'm Richard the Warlock!");
+	BrickWall model1;
 
-	Dummy bob;
-	Fwoosh* fwoosh = new Fwoosh();
+	Polymorph* polymorph = new Polymorph();
+	TargetGenerator tarGen;
 
-	std::cout << "----1----" << std::endl;
+	tarGen.learnTargetType(&model1);
+	richard.learnSpell(polymorph);
 
-	richard.learnSpell(fwoosh);
+	Fireball* fireball = new Fireball();
 
-	std::cout << "----2----" << std::endl;
+	richard.learnSpell(fireball);
+
+	ATarget* wall = tarGen.createTarget("Inconspicuous Red-brick Wall");
+
 	richard.introduce();
-	richard.launchSpell("Fwoosh", bob);
-
-
-	std::cout << "----3----" << std::endl;
-	richard.forgetSpell("Fwoosh");
-	richard.launchSpell("Fwoosh", bob);
+	richard.launchSpell("Polymorph", *wall);
+	richard.launchSpell("Fireball", *wall);
+  return (0);
 }

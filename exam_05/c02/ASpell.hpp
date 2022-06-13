@@ -13,7 +13,7 @@
 # ifndef ASPELL_HPP
 # define ASPELL_HPP
 
-#include "Warlock.hpp"
+#include <iostream>
 #include "ATarget.hpp"
 
 class ATarget;
@@ -34,7 +34,7 @@ class ASpell
 	void				launch_function(const ATarget &tar) const;
 
 	//destructor
-	~ASpell(void);				// destructor
+	virtual ~ASpell(void);				// destructor
 
 	
 

@@ -6,7 +6,7 @@
 /*   By: bben-yaa <bben-yaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:23:56 by bben-yaa          #+#    #+#             */
-/*   Updated: 2022/06/13 14:09:14 by bben-yaa         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:51:30 by bben-yaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,8 @@ void	Warlock::introduce() const
 
 Warlock::~Warlock(void)
 {
-	std::cout << this->name << ": My job is done!" << std::endl;
-	std::vector<ASpell*>::iterator it = spells.begin();
-	std::vector<ASpell*>::iterator ite = spells.end();
-
-	while (it != ite)
-	{
-		this->spells.erase(it);
-		it++;
-	}
+	std::cout << this->name << ": My job here is done!" << std::endl;
+	return ;
 }
 
 std::string const &	Warlock::getTitle(void) const
@@ -53,50 +46,19 @@ void	Warlock::setTitle(std::string const & Title)
 
 void	Warlock::learnSpell(ASpell *asp)	//apprend le spell
 {
-	std::vector<ASpell *>::iterator it = spells.begin();
-	std::vector<ASpell *>::iterator ite = spells.end();
-
-	if (!asp)
-		return ; 
-	while (it != ite)
-	{
-		if ((*it)->getName() == asp->getName())
-			return ;
-		it++;
-	}
-	spells.push_back(asp->clone());
+	spell.learnSpell(asp);
 	return ;
 }
 
 void	Warlock::forgetSpell(std::string sp_name)	//oublie le spell
 {
-	std::vector<ASpell*>::iterator it = spells.begin();
-	std::vector<ASpell*>::iterator ite = spells.end();
-
-	while (it != ite)
-	{
-		if ((*it)->getName() == sp_name)
-		{
-			spells.erase(it);
-			return ;
-		}
-		it++;
-	}
+	spell.forgetSpell(sp_name);
 	return ;
 }
 void	Warlock::launchSpell(std::string sp_name, ATarget &tar)
 {
-	std::vector<ASpell *>::iterator it = spells.begin();
-	std::vector<ASpell *>::iterator ite = spells.end();
-
-	while (it != ite)
-	{
-		if ((*it)->getName() == sp_name)
-		{
-			(*it)->launch_function(tar);
-			return ;
-		}
-		it++;
-	}
+	ASpell *tmp = spell.createSpell(sp_name);
+	if (tmp)
+		tmp->launch_function(tar);
 	return ;
 }

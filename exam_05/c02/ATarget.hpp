@@ -6,7 +6,7 @@
 /*   By: bben-yaa <bben-yaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 10:45:57 by bben-yaa          #+#    #+#             */
-/*   Updated: 2022/06/13 13:50:49 by bben-yaa         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:49:10 by bben-yaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ class ATarget
 	
 
 	//destructor
-	~ATarget(void);				// destructor
+	virtual ~ATarget(void);				// destructor
 
 	
 
