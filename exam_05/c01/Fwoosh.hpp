@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ASpell.cpp                                         :+:      :+:    :+:   */
+/*   Fwoosh.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bben-yaa <bben-yaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/10 10:23:56 by bben-yaa          #+#    #+#             */
-/*   Updated: 2022/06/13 11:10:27 by bben-yaa         ###   ########.fr       */
+/*   Created: 2022/06/13 11:13:08 by bben-yaa          #+#    #+#             */
+/*   Updated: 2022/06/13 11:55:41 by bben-yaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ASpell.hpp"
+# ifndef FWOOSH_HPP
+# define FWOOSH_HPP
 
-ASpell::ASpell(std::string Name, std::string Effects) : name(Name), effects(Effects)
-{
-	return ;
-}
+# include "ASpell.hpp"
 
-ASpell::~ASpell(void)
-{
-	return ;
-}
+class ASepll;
 
-void	ASpell::launch_function(const ATarget &tar) const
+class Fwoosh : public ASpell
 {
-	tar.getHitBySpell(*this);
-}
+	public:
+		Fwoosh(void);
+		Fwoosh	*clone(void)const;
+		
+		virtual ~Fwoosh(void);
+	
+	private:
+	
+};
 
-std::string const &	ASpell::getEffects(void) const
-{
-	return (this->effects);
-}
-
-std::string const &	ASpell::getName(void) const
-{
-	return (this->name);
-}
+# endif

@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ASpell.cpp                                         :+:      :+:    :+:   */
+/*   ATarget.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bben-yaa <bben-yaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:23:56 by bben-yaa          #+#    #+#             */
-/*   Updated: 2022/06/13 11:10:27 by bben-yaa         ###   ########.fr       */
+/*   Updated: 2022/06/13 11:12:03 by bben-yaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ASpell.hpp"
+#include "ATarget.hpp"
 
-ASpell::ASpell(std::string Name, std::string Effects) : name(Name), effects(Effects)
+ATarget::ATarget(std::string Type) :  type(Type)
 {
 	return ;
 }
 
-ASpell::~ASpell(void)
+
+ATarget::~ATarget(void)
 {
 	return ;
 }
 
-void	ASpell::launch_function(const ATarget &tar) const
+std::string const &	ATarget::getType(void) const
 {
-	tar.getHitBySpell(*this);
+	return (this->type);
 }
 
-std::string const &	ASpell::getEffects(void) const
+void	ATarget::getHitBySpell(const ASpell &asp) const
 {
-	return (this->effects);
-}
-
-std::string const &	ASpell::getName(void) const
-{
-	return (this->name);
+	std::cout << this->type << " has been " << asp.getEffects() << "!" << std::endl;
 }

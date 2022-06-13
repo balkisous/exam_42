@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ASpell.cpp                                         :+:      :+:    :+:   */
+/*   Dummy.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bben-yaa <bben-yaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/10 10:23:56 by bben-yaa          #+#    #+#             */
-/*   Updated: 2022/06/13 11:10:27 by bben-yaa         ###   ########.fr       */
+/*   Created: 2022/06/13 11:13:08 by bben-yaa          #+#    #+#             */
+/*   Updated: 2022/06/13 11:55:41 by bben-yaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ASpell.hpp"
+# ifndef DUMMY_HPP
+# define DUMMY_HPP
 
-ASpell::ASpell(std::string Name, std::string Effects) : name(Name), effects(Effects)
-{
-	return ;
-}
+# include "ATarget.hpp"
 
-ASpell::~ASpell(void)
-{
-	return ;
-}
+class ATarget;
 
-void	ASpell::launch_function(const ATarget &tar) const
+class Dummy : public ATarget
 {
-	tar.getHitBySpell(*this);
-}
+	public:
+		Dummy(void);
+		Dummy	*clone(void)const;
+		
+		virtual ~Dummy(void);
+	
+	private:
+	
+};
 
-std::string const &	ASpell::getEffects(void) const
-{
-	return (this->effects);
-}
-
-std::string const &	ASpell::getName(void) const
-{
-	return (this->name);
-}
+# endif
