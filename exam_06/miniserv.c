@@ -85,20 +85,23 @@ int main(int ac, char **av) {
         exit(1);
     }
 
+	// socket create and verification 
 	if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
         fatal();
 	bzero(&servaddr, sizeof(servaddr)); 
 
+	// assign IP, PORT 
 	servaddr.sin_family = AF_INET; 
 	servaddr.sin_addr.s_addr = htonl(2130706433); //127.0.0.1
 	servaddr.sin_port = htons(atoi(av[1])); 
   
+	// Binding newly created socket to given IP and verification 
 	if ((bind(sockfd, (const struct sockaddr *)&servaddr, sizeof(servaddr))) != 0)
         fatal();
 	if (listen(sockfd, 10) != 0)
         fatal();
-    FD_ZERO(&_fds);
-    FD_SET(sockfd, &_fds);
+    FD_ZERO(&_fds); // set the _fds to 0
+    FD_SET(sockfd, &_fds); // add a descriptor file in _fds
     max_fd = sockfd;
 
     for (;;)
@@ -108,13 +111,12 @@ int main(int ac, char **av) {
             fatal();
         for (int fd = 0; fd <= max_fd; fd++)
         {
-            if (!FD_ISSET(fd, &fd_read))
+            if (!FD_ISSET(fd, &fd_read)) // check if a descriptor file is contained in a set 
                 continue;
-            if (fd == sockfd)
+            if (fd == sockfd) // if new client connect
             {
-                printf("new client\n");
                 len = sizeof(cli);
-                if ((connfd = accept(sockfd, (struct sockaddr *)&cli, &len)) < 0 )
+                if ((connfd = accept(sockfd, (struct sockaddr *)&cli, &len)) < 0 ) // extract from the queue of pending connections of the listening sockfd socket, create a new connected socket
                     fatal();
                 if (max_fd < connfd)
                     max_fd = connfd;
@@ -122,14 +124,13 @@ int main(int ac, char **av) {
                 client++;
                 _msg[connfd] = NULL;
                 sprintf(send_info, "server: client %d just arrived\n", _usr[connfd]);
-                send_all(connfd, send_info);
-                FD_SET(connfd, &_fds);
+                send_all(connfd, send_info); // send to all other clients that a new client arrived
+                FD_SET(connfd, &_fds); // add a descriptor file in _fds
                 break;
             }
             else
             {
-                printf("else listen\n");
-                int ret = recv(fd, buff, 1024, 0);
+                int ret = recv(fd, buff, 1024, 0); // return the length of the message if she success
                 if (ret <= 0)
                 {
                     sprintf(send_info, "server: client %d just left\n", _usr[fd]);
@@ -137,7 +138,7 @@ int main(int ac, char **av) {
                     close(fd);
                     free(_msg[fd]);
                     _msg[fd] = NULL;
-                    FD_CLR(fd, &_fds);
+                    FD_CLR(fd, &_fds); // remove the fd from _fds
                     break;
                 }
                 buff[ret] = '\0';
@@ -146,7 +147,7 @@ int main(int ac, char **av) {
                 {
                     sprintf(send_info, "client %d: ", _usr[fd]);
                     send_all(fd, send_info);
-                    send_all(fd, msg);
+                    send_all(fd, msg); // send the messqge we receive from the client
                     free(msg);
                     msg = NULL;
                 }
