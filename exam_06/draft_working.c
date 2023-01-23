@@ -111,7 +111,7 @@ int main(int argc, char **argv)
 	
 		if (select(max_fd + 1, &_fds_read, &_fds_write, 0, 0) < 0)
 			fatal();
-		for (int fd = 0; fd < max_fd; fd++)
+		for (int fd = 0; fd <= max_fd; fd++)
 		{
 			if (!FD_ISSET(fd, &_fds_read)) //  FD_ISSET() vérifie si un descripteur est contenu dans un ensemble
 				continue;

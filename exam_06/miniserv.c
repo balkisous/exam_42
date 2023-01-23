@@ -10,8 +10,8 @@
 int sockfd, connfd, max_fd;
 struct sockaddr_in servaddr, cli;
 fd_set _fds, fd_read, fd_write;
-int client = 0;
 socklen_t len;
+int client = 0;
 int _usr[65000];
 char *_msg[65000];
 char buff[1025];
@@ -68,10 +68,8 @@ char *str_join(char *buf, char *add)
 void send_all(int tmp, char *str)
 {
     for (int fd = 0; fd <= max_fd; fd++)
-    {
         if (FD_ISSET(fd, &fd_write) && fd != tmp)
             send(fd, str, strlen(str), 0);
-    }
 }
 
 void fatal()
@@ -80,25 +78,21 @@ void fatal()
     exit(1);
 }
 
-int main(int ac, char **av)
-{
-
+int main(int ac, char **av) {
     if (ac != 2)
     {
         write(2, "Wrong arguments\n", strlen("Wrong arguments\n"));
         exit(1);
     }
-	// socket create and verification 
+
 	if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
         fatal();
 	bzero(&servaddr, sizeof(servaddr)); 
 
-	// assign IP, PORT 
 	servaddr.sin_family = AF_INET; 
 	servaddr.sin_addr.s_addr = htonl(2130706433); //127.0.0.1
 	servaddr.sin_port = htons(atoi(av[1])); 
   
-	// Binding newly created socket to given IP and verification 
 	if ((bind(sockfd, (const struct sockaddr *)&servaddr, sizeof(servaddr))) != 0)
         fatal();
 	if (listen(sockfd, 10) != 0)
@@ -112,7 +106,7 @@ int main(int ac, char **av)
         fd_read = fd_write = _fds;
         if (select(max_fd + 1, &fd_read, &fd_write, 0, 0) < 0)
             fatal();
-        for (int fd = 0; fd < max_fd; fd++)
+        for (int fd = 0; fd <= max_fd; fd++)
         {
             if (!FD_ISSET(fd, &fd_read))
                 continue;
