@@ -67,7 +67,7 @@ char *str_join(char *buf, char *add)
 
 void send_all(int tmp, char *str)
 {
-    for (int fd = 0; fd <= max_fd; fd++)
+    for (int fd = 4; fd <= max_fd; fd++)
         if (FD_ISSET(fd, &fd_write) && fd != tmp)
             send(fd, str, strlen(str), 0);
 }
@@ -78,10 +78,11 @@ void fatal()
     exit(1);
 }
 
-int main(int ac, char **av) {
+int main(int ac, char **av)
+{
     if (ac != 2)
     {
-        write(2, "Wrong arguments\n", strlen("Wrong arguments\n"));
+        write(2, "Wrong number of arguments\n", strlen("Wrong number of arguments\n"));
         exit(1);
     }
 
